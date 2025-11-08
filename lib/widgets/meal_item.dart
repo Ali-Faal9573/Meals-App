@@ -64,6 +64,7 @@ class MealItem extends StatelessWidget {
                     ),
                     SizedBox(height: 12),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MealItemTrait(
                           icon: Icons.schedule,
