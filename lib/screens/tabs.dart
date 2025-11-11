@@ -25,7 +25,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favoriteMeal = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
   void showInfoMessage(String message) {
@@ -35,22 +34,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void _toggleMealFavoritesStatus(Meal meal) {
-    final isExisting = _favoriteMeal.contains(meal);
-
-    if (isExisting) {
-      setState(() {
-        _favoriteMeal.remove(meal);
-      });
-      showInfoMessage('Meal is no longer a favorite.');
-    } else {
-      setState(() {
-        _favoriteMeal.add(meal);
-      });
-      showInfoMessage('Marked as a favorite!');
-    }
-  }
-
+  
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -91,7 +75,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }).toList();
 
     Widget activePage = CategoriesScreen(
-      onToggleFavorite: _toggleMealFavoritesStatus,
       availableMeals: availableMeals,
     );
     var activePageTitle = 'Categories';
@@ -100,7 +83,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       final favoriteMeals = ref.watch(favoriteMealProvider);
       activePage = MealsScreen(
         meals: favoriteMeals,
-        onToggleFavorite: _toggleMealFavoritesStatus,
       );
       activePageTitle = 'Your Favorites';
     }
